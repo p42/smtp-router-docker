@@ -1,0 +1,74 @@
+#!/usr/bin/with-contenv bash
+
+# Shell Colors
+set_shell_error() {
+  echo -e "\e[1m" # Style: bold
+  echo -e "\e[5m" # Style: blink
+  echo -e "\e[31m" # Text Color: Red
+}
+
+set_shell_info() {
+  echo -e "\e[1m" # Style: bold
+  echo -e "\e[33m" # Text Color: Yellow
+}
+
+set_shell_pass() {
+  echo -e "\e[1m" # Style: bold
+  echo -e "\e[32m" # Text Color: Green
+}
+
+set_shell_warning() {
+  echo -e "\e[1m" # Style: bold
+  echo -e "\e[35m" # Text Color: Magenta
+}
+
+reset_shell() {
+  echo -e "\e[0m" # Reset all shell attributes
+}
+
+# Write Keepalived Proxy Config
+set_exim_config() {
+  set_shell_info
+  echo "Setting Variables in /etc/exim/exim.conf"
+  reset_shell
+
+  set_shell_info
+  echo "Setting primarey_hostname to : ${PRIMARY_HOSTNAME}"
+  reset_shell
+
+
+  sed -ie "s/###PRIMARY_HOSTNAME###/${PRIMARY_HOSTNAME}/g" /etc/exim/exim.conf
+
+  # Add items to the /etc/exim/config.db created with these tables:
+  #    CREATE TABLE IF NOT EXISTS domains(domain STRING PRIMARY KEY, type STRING NOT NULL, target STRING NULL, port INTEGER NULL, auth NULL, auth_user NULL, auth_password NULL, enabled INTEGER NOT NULL);
+  #    CREATE TABLE IF NOT EXISTS relay(source STRING PRIMARY KEY, enabled INTEGER NOT NULL);
+
+
+  if [ -n "${DOMAIN_ROUTES}" ]; then
+    for domain_data in ${DOMAIN_ROUTES//,/ }
+    do
+      IFS=:
+      read domain route <<< ${domain_data}
+
+      if [ -n "${route}" ]; then
+
+        set_shell_info
+        echo "Adding Domain: ${domain} -> ${route}"
+        reset_shell
+
+        sqlite3 /etc/exim/config.db "INSERT INTO domains (domain, type, target, enabled) VALUES ('${domain}', 'relay', '${route}', '1');"
+      fi
+    done
+  fi
+}
+
+# variables
+
+# Read ENV variables
+PRIMARY_HOSTNAME=${HOSTNAME:="localhost"}
+DOMAIN_ROUTES=${DOMAINS:=""}
+set_exim_config
+
+set_shell_info
+echo "Completed Initializing Exim"
+reset_shell

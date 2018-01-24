@@ -60,6 +60,20 @@ set_exim_config() {
       fi
     done
   fi
+
+  if [ -n "${RELAY_SOURCES}" ]; then
+    for relay_cidr in ${RELAY_SOURCES//,/ }
+    do
+      set_shell_info
+      echo "Allowing SMTP Relay from: ${relay_cidr}"
+      reset_shell
+
+      sqlite3 /etc/exim/config.db "INSERT INTO relay (source, enabled) VALUES ('${relay_cidr}', '1');"
+
+    done
+  fi
+
+
 }
 
 # variables
@@ -67,6 +81,8 @@ set_exim_config() {
 # Read ENV variables
 PRIMARY_HOSTNAME=${HOSTNAME:="localhost"}
 DOMAIN_ROUTES=${DOMAINS:=""}
+RELAY_SOURCES=${RELAY_NETS:=""}
+
 set_exim_config
 
 set_shell_info

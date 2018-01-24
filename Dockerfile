@@ -6,3 +6,5 @@ RUN apk add --no-cache exim exim-sqlite sqlite bash
 COPY container-files /
 
 ENTRYPOINT ["/init"]
+
+EXPOSE 25 445 587

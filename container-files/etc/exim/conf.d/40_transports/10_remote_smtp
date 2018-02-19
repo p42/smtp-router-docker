@@ -1,0 +1,3 @@
+remote_smtp:
+  driver = smtp
+  message_size_limit = ${if > {$max_received_linelength}{998} {1}{0}}

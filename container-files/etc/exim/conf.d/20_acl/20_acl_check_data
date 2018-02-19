@@ -1,0 +1,7 @@
+acl_check_data:
+
+  deny    message    = maximum allowed line length is 998 octets, \
+                       got $max_received_linelength
+          condition  = ${if > {$max_received_linelength}{998}}
+
+  accept

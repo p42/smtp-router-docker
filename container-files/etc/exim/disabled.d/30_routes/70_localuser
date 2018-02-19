@@ -1,0 +1,7 @@
+localuser:
+  driver = accept
+  check_local_user
+# local_part_suffix = +* : -*
+# local_part_suffix_optional
+  transport = local_delivery
+  cannot_route_message = Unknown user

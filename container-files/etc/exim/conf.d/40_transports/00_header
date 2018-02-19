@@ -1,0 +1,8 @@
+######################################################################
+#                      TRANSPORTS CONFIGURATION                      #
+######################################################################
+#                       ORDER DOES NOT MATTER                        #
+#     Only one appropriate transport is called for each delivery.    #
+######################################################################
+
+begin transports

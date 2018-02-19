@@ -1,0 +1,5 @@
+routed_domains:
+  driver = manualroute
+  domains = +relay_to_domains
+  transport = remote_smtp
+  route_list = * "${lookup sqlite{SQLITE_CONFIG_DB SQL_DOMAIN_RELAY_TARGET}}"

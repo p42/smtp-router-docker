@@ -1,0 +1,3 @@
+domainlist local_domains = ${lookup sqlite{SQLITE_CONFIG_DB SQL_LOCAL_DOMAINS}}
+domainlist relay_to_domains = ${lookup sqlite{SQLITE_CONFIG_DB SQL_RELAY_TO_DOMAINS}}
+hostlist   relay_from_hosts = localhost : ${lookup sqlite{SQLITE_CONFIG_DB SQL_RELAY_FROM_SOURCE}}

@@ -1,0 +1,3 @@
+tls_advertise_hosts = *
+tls_certificate = ###TLS_CERTIFICATE###
+tls_privatekey = ###TLS_PRIVATEKEY###

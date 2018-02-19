@@ -1,0 +1,14 @@
+userforward:
+  driver = redirect
+  check_local_user
+# local_part_suffix = +* : -*
+# local_part_suffix_optional
+  file = $home/.forward
+# allow_filter
+  no_verify
+  no_expn
+  check_ancestor
+  file_transport = address_file
+  pipe_transport = address_pipe
+  reply_transport = address_reply
+  

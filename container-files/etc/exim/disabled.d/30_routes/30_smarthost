@@ -1,0 +1,7 @@
+smarthost:
+  driver = manualroute
+  domains = ! +local_domains
+  transport = remote_smtp
+  route_data = MAIL.HOSTNAME.FOR.CENTRAL.SERVER.EXAMPLE
+  ignore_target_hosts = <; 0.0.0.0 ; 127.0.0.0/8 ; ::1
+  no_more

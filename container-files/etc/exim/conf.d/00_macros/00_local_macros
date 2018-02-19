@@ -1,0 +1,11 @@
+######################################################################
+#                    Local Macros                                    #
+######################################################################
+#
+
+SQLITE_CONFIG_DB = /etc/exim/config.db
+
+SQL_DOMAIN_RELAY_TARGET = SELECT DISTINCT target FROM domains WHERE type = 'relay' AND enabled = '1' AND domain = '${quote_sqlite:$domain}'
+SQL_LOCAL_DOMAINS = SELECT DISTINCT domain FROM domains WHERE type = 'local' AND enabled = '1'
+SQL_RELAY_TO_DOMAINS = SELECT DISTINCT domain FROM domains WHERE type = 'relay' AND enabled = '1' AND domain = '${quote_sqlite:$domain}'
+SQL_RELAY_FROM_SOURCE = SELECT DISTINCT source FROM relay WHERE enabled = '1'

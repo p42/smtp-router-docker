@@ -1,0 +1,3 @@
+address_pipe:
+  driver = pipe
+  return_output

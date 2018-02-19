@@ -1,0 +1,8 @@
+system_aliases:
+  driver = redirect
+  allow_fail
+  allow_defer
+  data = ${lookup{$local_part}lsearch{/etc/mail/aliases}}
+# user = exim
+  file_transport = address_file
+  pipe_transport = address_pipe

@@ -33,7 +33,7 @@ set_exim_config() {
   reset_shell
 
   set_shell_info
-  echo "Setting primarey_hostname to : ${PRIMARY_HOSTNAME}"
+  echo "Setting primary_hostname to : ${PRIMARY_HOSTNAME}"
   reset_shell
 
 
@@ -84,6 +84,13 @@ DOMAIN_ROUTES=${DOMAINS:=""}
 RELAY_SOURCES=${RELAY_NETS:=""}
 
 set_exim_config
+
+if [ ! -d /var/spool/exim ]; then
+  set_shell_info
+  echo "CreatingExim spool direcory"
+  mkdir -p /var/spool/exim
+fi
+chown -R exim:exim /var/spool/exim
 
 set_shell_info
 echo "Completed Initializing Exim"
